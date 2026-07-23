@@ -1,0 +1,26 @@
+{
+  "name": "ai-sdlc-toolkit",
+  "version": "0.1.0",
+  "description": "Copy-paste Claude Code toolkit for spec-driven, TDD-first AI SDLC — install with npx github:KiemVM/AI-SDLC",
+  "bin": {
+    "ai-sdlc": "bin/cli.js"
+  },
+  "files": [
+    "bin",
+    ".claude",
+    "docs/specs/README.md",
+    "docs/adr/README.md",
+    "docs/adr/template.md",
+    "docs/business/README.md",
+    "docs/ux/README.md",
+    "docs/architecture/README.md"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KiemVM/AI-SDLC.git"
+  }
+}

@@ -6,6 +6,10 @@ AI-assisted software development methodologies. This repo *is* the toolkit — c
 (and the `docs/` scaffold, if you want the folder conventions too) into any project to use it
 there.
 
+> **Quick start:** once installed, run `/guide` at any time for a full cheat sheet of every
+> command, the workflow order, and the status of features already in progress under
+> `docs/specs/`.
+
 ## What this is
 
 A **hybrid** of slash commands and Agent Skills: each command (`/spec:spec`,
@@ -18,7 +22,23 @@ deliberately deferred (see Roadmap).
 
 ## Install
 
-Copy the toolkit into your project root:
+**Option A — npx (recommended, no cloning needed):**
+
+```bash
+cd <your-project>
+npx github:KiemVM/AI-SDLC
+```
+
+This copies `.claude/` (commands, skills, constitution) and the `docs/` scaffold (folder
+conventions, ADR template) into the current directory. Existing files are left untouched.
+
+```bash
+npx github:KiemVM/AI-SDLC --dest ../some-other-project   # install elsewhere
+npx github:KiemVM/AI-SDLC --force                          # overwrite existing files
+npx github:KiemVM/AI-SDLC --dry-run                         # preview without writing
+```
+
+**Option B — manual copy**, if you already have this repo checked out locally:
 
 ```bash
 cp -r .claude docs <your-project>/
@@ -28,8 +48,7 @@ cp -r .claude docs <your-project>/
 Copy-Item -Recurse .claude,docs <your-project>/
 ```
 
-Both `.claude/` (commands, skills, constitution) and the `docs/` scaffold (folder
-conventions, ADR template) are needed together.
+Both `.claude/` and the `docs/` scaffold are needed together either way.
 
 ## The workflow
 
