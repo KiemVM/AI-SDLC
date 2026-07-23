@@ -121,10 +121,18 @@ docs/
 │   ├── wireframes/<screen-slug>.md
 │   └── prototypes/<prototype-slug>.md
 ├── specs/<feature-slug>/    # Specification.md, ImplementationPlan.md, Tasks.md
+│                            # (Tasks.md checkboxes are updated by /engineering:implement)
 ├── architecture/Architecture.md   # living, whole-system — distinct from adr/ and specs/*/ImplementationPlan.md
 ├── adr/                     # Architecture Decision Records, numbered NNNN-slug-decision.md
+│                            # (written by /spec:plan and, for structural changes, /engineering:refactor)
 └── release/CHANGELOG.md
 ```
+
+Engineering (`/engineering:implement`, `/test`, `/review`, `/refactor`) has no dedicated
+`docs/` folder of its own — its real output is source code and tests in the host project
+(wherever those live, e.g. `src/`, `tests/`), not `docs/`. Its only durable footprint under
+`docs/` is checking off tasks in `specs/<slug>/Tasks.md` and, when a refactor is
+architecturally significant, adding an ADR.
 
 ## Credits
 
