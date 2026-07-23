@@ -17,6 +17,8 @@ const FILE_ITEMS = [
   "docs/business/README.md",
   "docs/ux/README.md",
   "docs/architecture/README.md",
+  "docs/release/README.md",
+  "docs/release/CHANGELOG.md",
 ];
 
 const HELP = `AI SDLC Toolkit installer

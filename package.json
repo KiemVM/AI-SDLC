@@ -13,7 +13,9 @@
     "docs/adr/template.md",
     "docs/business/README.md",
     "docs/ux/README.md",
-    "docs/architecture/README.md"
+    "docs/architecture/README.md",
+    "docs/release/README.md",
+    "docs/release/CHANGELOG.md"
   ],
   "engines": {
     "node": ">=16"
