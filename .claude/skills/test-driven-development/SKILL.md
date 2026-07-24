@@ -25,6 +25,14 @@ rather than what it should do.
    step — don't accumulate uncertainty.
 4. Repeat for the next smallest behavior.
 
+## Working in an existing codebase
+
+Before writing the first test for a task, check what's already there: the test
+runner/config, existing test file naming and location, and the assertion/mocking style
+already in use. Match it. A second test framework bolted on next to an existing one
+fragments tooling and CI config for no real benefit — introduce a new one only if the
+project genuinely has none yet, and say so explicitly rather than choosing silently.
+
 ## What makes a good test
 
 - Minimal: tests one behavior, not three.
@@ -41,6 +49,7 @@ rather than what it should do.
 | "I'll batch several behaviors into one test to save time" | You lose the signal of which behavior broke, and the red phase stops proving anything specific |
 | "The test is basically the same as the implementation, so writing it after is fine" | That's exactly the failure mode this skill exists to prevent — the test should be written from the spec/requirement, not derived from code that already exists |
 | "I already know this will work" | Confidence is not evidence; run it and watch it fail before you believe it |
+| "I'll just use the framework I'm used to" (project already has a different one) | Fragments the project's test tooling and CI config instead of following what's already there |
 
 ## When a failure surprises you
 

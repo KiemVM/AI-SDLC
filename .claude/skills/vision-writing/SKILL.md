@@ -10,6 +10,16 @@ A vision statement is the top of the artifact chain: `/business:prd`, `/business
 right and everything downstream has a north star; get it vague and every later document
 inherits the vagueness.
 
+## Grounding in an existing codebase (brownfield adoption)
+
+If this product already has source code (the calling command detected project manifests or a
+`src/`/`lib/` tree), skim the README and top-level structure *before* starting the discovery
+loop below, and summarize what you found back to the user in 2-3 sentences. A vision written
+for an existing product should acknowledge what's already built, not read as if starting from
+zero — the discovery questions in step 1-5 still apply, but they're now "what should this
+become next," not "what should this be." This grounding is conversational context only: it
+does not change the `Vision.md` template, and it never produces a file of its own.
+
 ## Process
 
 1. **Establish the problem before the solution.** Ask what's broken or missing today, for
@@ -39,3 +49,4 @@ inherits the vagueness.
 | A goal reads like a feature ("add X") | Feature-shaped goals foreclose solution space too early — reframe as the outcome X would produce |
 | Target users described as "everyone" or "all businesses" | Too broad to build a coherent product or persona from |
 | A success metric can't be measured with real data | It won't be checkable later, so it won't actually gate anything |
+| Vision written for an existing product with no acknowledgment of what's already built | Reads as disconnected from reality; the user will discount the whole document |

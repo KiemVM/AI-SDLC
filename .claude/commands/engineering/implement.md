@@ -20,14 +20,18 @@ you don't understand, invoke **systematic-debugging** before attempting another 
 ## Process
 
 1. Locate the task; read its goal, files touched, and definition of done.
-2. RED: write one failing test for the smallest next behavior. Run it. Confirm it fails for
+2. If this project already has tests, detect its existing conventions first (test
+   runner/config file, existing test file naming and location, assertion/mocking style) via
+   Glob/Grep, and follow them for this task. Only introduce a new test tool if the project
+   genuinely has none yet, and say so explicitly rather than silently picking one.
+3. RED: write one failing test for the smallest next behavior. Run it. Confirm it fails for
    the right reason.
-3. GREEN: write minimal code to pass. Run tests.
-4. REFACTOR: clean up while staying green.
-5. Repeat steps 2-4 until the task's definition of done is met.
-6. Invoke **verification-before-completion**: run the full test command fresh, read the
+4. GREEN: write minimal code to pass. Run tests.
+5. REFACTOR: clean up while staying green.
+6. Repeat steps 3-5 until the task's definition of done is met.
+7. Invoke **verification-before-completion**: run the full test command fresh, read the
    output, only then claim success.
-7. Update `Tasks.md`: check off the task, note files touched.
+8. Update `Tasks.md`: check off the task, note files touched.
 
 ## Guardrails
 
