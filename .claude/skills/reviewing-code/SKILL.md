@@ -28,7 +28,9 @@ input or condition that triggers it — not a vague "this could be an issue."
    error paths.
 2. **Spec/constitution adherence** — does the diff satisfy the relevant Functional
    Requirements from `Specification.md`? Does it violate any `.claude/CONSTITUTION.md`
-   principle (e.g. tests-before-code, evidence-before-claims)?
+   principle (e.g. tests-before-code, evidence-before-claims)? If the diff touches UI and the
+   feature has a `docs/ux/wireframes/*.md` or `docs/ux/prototypes/<slug>.md`, does it match
+   the designed layout/states, or did the implementation quietly diverge?
 3. **Missing coverage** — is there a behavior change with no corresponding test?
 4. **Reuse/simplification** — does the diff reinvent something that already exists
    elsewhere in the codebase?

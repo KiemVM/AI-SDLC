@@ -17,6 +17,18 @@ class names, no API shapes. The moment you write "we'll use X to do Y," that con
 in `/spec:plan`, not here. If you catch yourself justifying a technical choice, stop and move
 it out.
 
+## Grounding in an existing UX design
+
+If this feature has a `docs/ux/prototypes/<slug>.md` or matching wireframes, they are a
+required input, not background reading — the calling command reads them before this skill
+runs. Ground User Scenarios and Functional Requirements in what was actually designed: a
+screen's states from the wireframe, a flow's steps from the prototype's screen sequence.
+Describing user-facing structure this way ("the system MUST show a confirmation state after
+submit") is still WHAT, not HOW — it only becomes implementation detail once it names a
+component, file, or technology. If the spec would contradict the wireframe/prototype (a
+different flow, a missing state), reconcile with the user explicitly rather than silently
+picking one or the other.
+
 ## Process
 
 1. **Restate the ask** in your own words back to the user before writing anything, to confirm
@@ -53,3 +65,4 @@ it out.
 | A requirement uses "should" instead of "MUST"/"MUST NOT" | Signals it wasn't actually decided — resolve or mark `[NEEDS CLARIFICATION]` |
 | You silently picked an interpretation because asking felt slow | The whole point of a spec is to make disagreements visible before code exists |
 | The spec reads like a to-do list of coding steps | You've drifted into planning; move that content to `/spec:plan` |
+| A related wireframe/prototype exists but the spec was written without opening it | Downstream `/spec:plan` and `/engineering:implement` will build something that doesn't match the design |

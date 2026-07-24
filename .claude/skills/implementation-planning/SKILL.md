@@ -18,7 +18,9 @@ structure, and a way to verify each requirement. It is still a document, not cod
    simplest."
 3. **Decompose into files/modules with single responsibilities.** Each entry in the file
    structure table should be describable in one sentence. If a description needs "and," the
-   module is probably doing two things.
+   module is probably doing two things. If the spec references a wireframe/prototype, every
+   UI-facing module should name which one it implements — a module with UI responsibility and
+   no wireframe behind it is either missing from the UX phase or scope creep.
 4. **Map every functional requirement to a verification method.** FR-N in the spec should
    trace to a row in the testing strategy table. A requirement with no verification method is
    a requirement that will silently rot.

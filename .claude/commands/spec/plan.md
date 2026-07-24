@@ -15,12 +15,16 @@ Invoke the **implementation-planning** skill for process and structure.
   `/spec:spec` first.
 - `.claude/CONSTITUTION.md`.
 - Existing codebase structure (Glob/Grep relevant directories) for architecture context.
+- Whatever UX artifact the spec's "Related UX" line points to, if any — read it so the UI
+  component breakdown below matches the designed screens/states, not a reinvented structure.
 
 ## Process
 
-1. Read the spec and constitution.
+1. Read the spec and constitution; if the spec references a wireframe/prototype, read that
+   too.
 2. Propose 2-3 viable technical approaches with trade-offs; recommend one.
-3. Decompose into file/module structure — one clear responsibility per file/module.
+3. Decompose into file/module structure — one clear responsibility per file/module. For any
+   UI-facing module, name which wireframe/prototype it implements.
 4. Define testing strategy: map each FR-N in the spec to how it will be verified.
 5. For any decision with long-term consequences (framework choice, data model, API shape,
    anything expensive to reverse), write an ADR to `docs/adr/NNNN-<slug>-<decision>.md`.
@@ -37,8 +41,8 @@ Spec: docs/specs/<slug>/Specification.md
 <chosen approach + why, trade-offs considered>
 
 ## File/Module Structure
-| Path | Responsibility |
-|------|-----------------|
+| Path | Responsibility | Implements (wireframe/prototype, if UI-facing) |
+|------|-----------------|-----------------|
 
 ## Testing Strategy
 | Requirement | Verified by |
