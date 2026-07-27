@@ -1,12 +1,11 @@
 # AI SDLC Toolkit
 
-A copy-paste `.claude/` toolkit that gives Claude Code a disciplined, five-phase
+A copy-paste toolkit that gives your AI coding agent a disciplined, five-phase
 Business → UX → Specification → Engineering → Release workflow, distilled from four
-AI-assisted software development methodologies. This repo *is* the toolkit — copy `.claude/`
-(and the `docs/` scaffold, if you want the folder conventions too) into any project to use it
-there.
+AI-assisted software development methodologies. Works with **Claude Code** and **Codex CLI**.
+This repo *is* the toolkit — install it into any project with one command (see below).
 
-> **Quick start:** once installed, run `/guide` at any time for a full cheat sheet of every
+> **Quick start:** on Claude Code, run `/guide` at any time for a full cheat sheet of every
 > command, the workflow order, and the status of features already in progress under
 > `docs/specs/`.
 
@@ -17,7 +16,8 @@ A **hybrid** of slash commands and Agent Skills: each command (`/business:vision
 skill(s) it invokes for the actual methodology. Commands give you a predictable interface;
 skills carry the reusable engineering discipline and can also auto-activate by relevance
 outside the command itself. All five phases from the original design docs are implemented:
-16 commands, 17 skills.
+17 commands, 17 skills — see "Multi-agent support" below for how Codex CLI gets the same 17
+skills without a separate command layer.
 
 ## Install
 
@@ -25,11 +25,13 @@ outside the command itself. All five phases from the original design docs are im
 
 ```bash
 cd <your-project>
-npx github:KiemVM/AI-SDLC
+npx github:KiemVM/AI-SDLC                    # Claude Code (default)
+npx github:KiemVM/AI-SDLC --target codex      # Codex CLI
+npx github:KiemVM/AI-SDLC --target both       # both
 ```
 
-This copies `.claude/` (commands, skills, constitution) and the `docs/` scaffold (folder
-conventions, ADR and changelog templates) into the current directory. Existing files are left
+This installs the toolkit for your chosen agent(s) plus the `docs/` scaffold (folder
+conventions, ADR/changelog templates — shared by both agents). Existing files are left
 untouched.
 
 ```bash
@@ -38,7 +40,9 @@ npx github:KiemVM/AI-SDLC --force                          # overwrite existing 
 npx github:KiemVM/AI-SDLC --dry-run                         # preview without writing
 ```
 
-**Option B — manual copy**, if you already have this repo checked out locally:
+**Option B — manual copy**, for the Claude Code target only, if you already have this repo
+checked out locally (the Codex target is generated, not static — use Option A or
+`node scripts/build-codex-skills.js` directly instead of copying):
 
 ```bash
 cp -r .claude docs <your-project>/
@@ -48,13 +52,33 @@ cp -r .claude docs <your-project>/
 Copy-Item -Recurse .claude,docs <your-project>/
 ```
 
-Both `.claude/` and the `docs/` scaffold are needed together either way.
+## Multi-agent support
+
+`.claude/` (commands + skills) is the **single source of truth**. Codex CLI has no reliable
+project-scoped equivalent of Claude Code's thin "commands" layer yet — only project-scoped
+Skills (`.codex/skills/<name>/SKILL.md`, the same open [SKILL.md standard](https://agentskills.io)
+Claude Code uses). So instead of hand-maintaining a second, easily-drifting copy of every
+command and skill, `scripts/build-codex-skills.js` renders `.codex/skills/` from `.claude/` at
+install time: each Codex skill is a merge of the matching Claude command's Inputs/Process/
+Output-template/Guardrails plus the skill's own methodology, so it's a self-contained
+entrypoint (Codex has no separate place to put that content). Two commands that share a skill
+(`/engineering:implement` and `/engineering:test` both use `test-driven-development`) merge
+into one skill with two workflow subsections; `/guide`, which has no backing skill, becomes
+its own skill for Codex.
+
+Edit `.claude/` only — `.codex/skills/` is always derived from it, never hand-edited, so the
+two can't drift. On Codex, skills auto-activate by relevance or via `$skill-name`/`/skills`;
+there's no `/namespace:command` syntax there the way there is on Claude Code.
 
 ## The workflow
 
 ```
 Business  ->  UX  ->  Specification  ->  Engineering  ->  Release
 ```
+
+The command syntax below (`/business:vision`, `/spec:spec`, ...) is Claude Code's. On Codex
+CLI the same workflow is available as Skills with the same names (e.g. `spec-writing`,
+`test-driven-development`) — see "Multi-agent support" above.
 
 | Command | Phase | Goal | Writes |
 |---|---|---|---|
@@ -168,6 +192,9 @@ comparison this design is based on:
 - **[obra/Superpowers](https://github.com/obra/superpowers)** — execution-first Agent Skills;
   borrowed: iron-law framing, systematic debugging's four-phase process, and
   verification-before-completion as a standalone gate.
+- **[SKILL.md open standard](https://agentskills.io)** — the shared skill format that Claude
+  Code, Codex CLI, and 30+ other tools read; what makes this toolkit's multi-agent support
+  possible without maintaining separate skill content per agent.
 
 All skill content in this toolkit is original prose written for this project, structurally
 informed by how the above frameworks shape their own skills, not copied from them.

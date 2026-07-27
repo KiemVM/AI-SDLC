@@ -1,12 +1,13 @@
 {
   "name": "ai-sdlc-toolkit",
   "version": "0.1.0",
-  "description": "Copy-paste Claude Code toolkit for spec-driven, TDD-first AI SDLC — install with npx github:KiemVM/AI-SDLC",
+  "description": "Copy-paste spec-driven, TDD-first AI SDLC toolkit for Claude Code and Codex CLI — install with npx github:KiemVM/AI-SDLC",
   "bin": {
     "ai-sdlc": "bin/cli.js"
   },
   "files": [
     "bin",
+    "scripts",
     ".claude",
     "docs/specs/README.md",
     "docs/adr/README.md",
