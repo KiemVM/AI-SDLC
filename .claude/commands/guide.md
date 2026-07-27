@@ -35,10 +35,16 @@ WORKFLOW ORDER
   RELEASE
     /release:release [version]                 -> readiness gate + changelog/PR notes draft (docs only)
 
+  ANY PHASE
+    /decide <slug> "<decision>"                -> capture a mid-work decision (ADR + DECISIONS.md index),
+                                                   then find what's now stale downstream
+
   /guide                                        -> this cheat sheet
 
 Not every project needs to start at Business — jump straight to /spec:spec if you already
-know the feature. Business/UX exist for when you want that discipline upstream.
+know the feature. Business/UX exist for when you want that discipline upstream. /decide isn't
+part of the linear flow — run it any time a decision changes direction that's already written
+down (e.g. switching a technical approach mid-implementation).
 
 GOVERNANCE
   .claude/CONSTITUTION.md   Non-negotiable principles every command follows. Read it,
@@ -52,7 +58,7 @@ SKILLS (auto-invocable by relevance, or via the commands above)
   spec-writing, implementation-planning, task-breakdown,
   test-driven-development, systematic-debugging,
   reviewing-code, refactoring, verification-before-completion,
-  release-preparation
+  release-preparation, decision-capture
 
 Full details: README.md
 ```
@@ -66,17 +72,19 @@ Full details: README.md
 3. Glob `docs/specs/*/` to find existing feature slugs. For each slug, check which of
    `Specification.md`, `ImplementationPlan.md`, `Tasks.md` exist, and if `Tasks.md` exists,
    read it to count `[x]` vs `[ ]` tasks.
-4. Print a short status block, e.g.:
+4. Read `docs/adr/DECISIONS.md` and count its rows.
+5. Print a short status block, e.g.:
 
 ```
 CURRENT STATE
   Business: Vision done, PRD done, Architecture not started
   UX: 2 personas, 1 journey, 3 wireframes, 0 prototypes
+  Decisions logged: 3 (see docs/adr/DECISIONS.md)
   Features:
     <slug>   spec: done   plan: done   tasks: 2/5 done   -> next: /engineering:implement Task-3
 ```
 
-5. If nothing exists yet anywhere, print:
+6. If nothing exists yet anywhere, print:
    `No artifacts yet. Start with /business:vision, or jump straight to /spec:spec if you already know the feature.`
 
 ## Guardrails

@@ -22,7 +22,8 @@ Invoke the **refactoring** skill.
 3. Make ONE small change at a time; invoke **verification-before-completion** after each to
    confirm tests are still green.
 4. If the refactor is structural/architectural, propose adding/updating an ADR in
-   `docs/adr/`.
+   `docs/adr/` and append a row to `docs/adr/DECISIONS.md` (same format `/decide` uses — see
+   that command).
 
 ## Guardrails
 

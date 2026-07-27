@@ -17,7 +17,7 @@ A **hybrid** of slash commands and Agent Skills: each command (`/business:vision
 skill(s) it invokes for the actual methodology. Commands give you a predictable interface;
 skills carry the reusable engineering discipline and can also auto-activate by relevance
 outside the command itself. All five phases from the original design docs are implemented:
-15 commands, 16 skills.
+16 commands, 17 skills.
 
 ## Install
 
@@ -73,10 +73,13 @@ Business  ->  UX  ->  Specification  ->  Engineering  ->  Release
 | `/engineering:review [PR#]` | Engineering | Review a diff/PR for bugs and spec/constitution adherence | findings (chat output) |
 | `/engineering:refactor [scope]` | Engineering | Improve structure in small, test-verified steps, no behavior change | source changes, optional ADR |
 | `/release:release [version]` | Release | Readiness gate + changelog/release notes draft — never tags/pushes/deploys | `docs/release/CHANGELOG.md` entry, PR description (chat) |
+| `/decide <slug> "<decision>"` | — (any phase) | Capture a mid-work decision and find what's now stale downstream | ADR + `docs/adr/DECISIONS.md` row |
 | `/guide` | — | Cheat sheet + live feature status | (read-only) |
 
 Not every project needs to start at Business — if you already have a clear feature in mind,
 jump straight to `/spec:spec`. The upstream phases exist for when you want that discipline.
+`/decide` isn't part of the linear flow — run it whenever a decision changes direction that's
+already written down (see "Decision log" below).
 
 ## Skills behind the commands
 
@@ -98,6 +101,7 @@ jump straight to `/spec:spec`. The upstream phases exist for when you want that 
 | `refactoring` | `/engineering:refactor` | Structural improvement without behavior change |
 | `verification-before-completion` | all implement/test/refactor/release commands | Before claiming anything is done, passing, fixed, or release-ready |
 | `release-preparation` | `/release:release` | Checking release readiness and drafting notes |
+| `decision-capture` | `/decide` (also `/spec:plan`, `/engineering:refactor` for their own ADRs) | A decision changes direction that's already written down |
 
 ## The constitution
 
@@ -107,6 +111,16 @@ root-cause-over-patches, small-reviewable-units, evidence-before-claims, docs-ar
 no irreversible actions (git tag/push/deploy) without explicit human confirmation. Every
 command reads it before acting. Amend it directly and log the change in its Amendments
 section — no formal versioning for this toolkit.
+
+## Decision log
+
+Mid-work decisions (a scope reversal, a technical approach swap — "switch rate-limiting to
+Kong") have a home other than chat: run `/decide <slug> "<decision>"` from any phase. It
+writes an ADR, appends a row to `docs/adr/DECISIONS.md` (the one file to scan for "what's been
+decided"), and greps existing specs/plans/tasks/architecture docs for anything that now
+contradicts the decision so it doesn't silently go stale. `/spec:plan` and
+`/engineering:refactor` write to the same ADR/index format for decisions made in their normal
+flow — `/decide` exists for everything that doesn't fit neatly into either.
 
 ## Folder conventions
 
@@ -123,8 +137,9 @@ docs/
 ├── specs/<feature-slug>/    # Specification.md, ImplementationPlan.md, Tasks.md
 │                            # (Tasks.md checkboxes are updated by /engineering:implement)
 ├── architecture/Architecture.md   # living, whole-system — distinct from adr/ and specs/*/ImplementationPlan.md
-├── adr/                     # Architecture Decision Records, numbered NNNN-slug-decision.md
-│                            # (written by /spec:plan and, for structural changes, /engineering:refactor)
+├── adr/
+│   ├── DECISIONS.md         # scannable index of every decision — check here first
+│   └── NNNN-slug-decision.md   # written by /spec:plan, /engineering:refactor, or /decide
 └── release/CHANGELOG.md
 ```
 

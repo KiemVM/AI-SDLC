@@ -14,6 +14,7 @@ const FILE_ITEMS = [
   "docs/specs/README.md",
   "docs/adr/README.md",
   "docs/adr/template.md",
+  "docs/adr/DECISIONS.md",
   "docs/business/README.md",
   "docs/ux/README.md",
   "docs/architecture/README.md",

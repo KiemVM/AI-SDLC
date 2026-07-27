@@ -10,7 +10,8 @@ Spec-Kit's `constitution.md`. Keep it short — this is process governance, not 
    from `Vision.md`; a feature's `Specification.md` may not silently diverge from the relevant
    `Persona.md`/`PRD.md` epic; `/engineering:implement` may not silently diverge from its
    `Specification.md`. If reality demands a change, update the upstream artifact first
-   (re-run the command that owns it) — don't quietly drift downstream instead.
+   (re-run the command that owns it, or run `/decide` for a decision that doesn't belong to
+   any single command) — don't quietly drift downstream instead.
 2. **Tests before code.** Every behavior change is written test-first (see the
    `test-driven-development` skill). No exceptions without explicit user sign-off.
 3. **Root cause over patches.** No fix ships without a root-cause investigation when behavior
@@ -47,6 +48,11 @@ Spec-Kit's `constitution.md`. Keep it short — this is process governance, not 
 - `/release` requires a green test suite and no unresolved `[NEEDS CLARIFICATION]` markers in
   any in-scope spec before drafting release notes, and never performs the release itself —
   see principle 7.
+- `/decide` MUST write an ADR and append a row to `docs/adr/DECISIONS.md`, and MUST search
+  `docs/specs/*`, `docs/architecture/Architecture.md` for anything the decision makes stale
+  before finishing — never skip the propagation search, and never silently rewrite what it
+  finds without asking. `/spec:plan` and `/engineering:refactor` follow the same
+  ADR-plus-index format when they record a decision themselves.
 
 ## Amendments
 
@@ -55,3 +61,5 @@ Edit this file directly and add a line below. No formal versioning process for M
 - 2026-07-23 — Initial constitution created (Specification + Engineering phases).
 - 2026-07-23 — Extended to cover Business, UX, and Release phases (principles 1, 6, 7 updated
   or added; process rules for the eight new commands added).
+- 2026-07-24 — Added `/decide` for mid-work decisions and `docs/adr/DECISIONS.md` as the
+  central decision index; principle 1 and process rules updated to reference it.
