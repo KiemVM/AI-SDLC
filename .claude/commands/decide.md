@@ -18,19 +18,23 @@ lost in chat and never reach the docs that depended on the old approach.
 - `$ARGUMENTS`: a one-line statement of what was decided — REQUIRED, ask if missing. A slug is
   auto-derived from it (kebab-case, 2-4 words); add your own as an extra word to override.
 - `.claude/CONSTITUTION.md`.
-- `docs/adr/DECISIONS.md` — the running index; read it to pick the next ADR number and to
-  check whether this decision supersedes an existing one.
+- `docs/adr/DECISIONS.md` — the running index; read it to check whether this decision
+  supersedes an existing one.
 
 ## Process
 
 1. Read the constitution and `docs/adr/DECISIONS.md`. Derive `<slug>` (kebab-case, 2-4 words)
    from the decision statement, unless the user gave one explicitly.
 2. Invoke **decision-capture** to write the ADR: context, the decision itself, consequences,
-   and — if this replaces an earlier decision — mark that ADR `Superseded by ADR-000N` (never
-   delete it).
-3. Write `docs/adr/NNNN-<slug>-<decision>.md` using `docs/adr/template.md`.
-4. Append a row to `docs/adr/DECISIONS.md` (see format below) — this is the one file to scan
-   for "what has been decided," so it must stay current every time this command runs.
+   and — if this replaces an earlier decision — mark that ADR `Superseded by <YYYY-MM-DD-slug>`
+   (never delete it).
+3. Write `docs/adr/YYYY-MM-DD-<slug>.md` (today's date) using `docs/adr/template.md`. The
+   date+slug filename is the ADR's permanent identity — no sequential number to assign, which
+   is what makes two people running `/decide` in parallel on different branches safe (see
+   `docs/adr/README.md` for why a counter isn't used).
+4. Append a row to `docs/adr/DECISIONS.md` (see format below), at the top — this is the one
+   file to scan for "what has been decided," so it must stay current every time this command
+   runs.
 5. **Propagate**: Grep `docs/specs/*/Specification.md`, `docs/specs/*/ImplementationPlan.md`,
    `docs/specs/*/Tasks.md`, and `docs/architecture/Architecture.md` for terms tied to the old
    approach (from the decision's context, not just the exact old keyword). List every match as
@@ -44,7 +48,7 @@ lost in chat and never reach the docs that depended on the old approach.
 ## docs/adr/DECISIONS.md row format
 
 ```markdown
-| 000N | YYYY-MM-DD | <one-line decision> | Accepted | supersedes 000M (if any) | <slugs/files affected> |
+| YYYY-MM-DD | [<one-line decision>](YYYY-MM-DD-slug.md) | Accepted | supersedes YYYY-MM-DD-slug (if any) | <slugs/files affected> |
 ```
 
 ## Guardrails

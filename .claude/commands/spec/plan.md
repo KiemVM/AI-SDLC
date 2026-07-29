@@ -27,8 +27,9 @@ Invoke the **implementation-planning** skill for process and structure.
    UI-facing module, name which wireframe/prototype it implements.
 4. Define testing strategy: map each FR-N in the spec to how it will be verified.
 5. For any decision with long-term consequences (framework choice, data model, API shape,
-   anything expensive to reverse), write an ADR to `docs/adr/NNNN-<slug>-<decision>.md` and
-   append a row to `docs/adr/DECISIONS.md` (same format `/decide` uses — see that command).
+   anything expensive to reverse), write an ADR to `docs/adr/YYYY-MM-DD-<slug>.md` (today's
+   date — not a sequential number, see `docs/adr/README.md` for why) and append a row to
+   `docs/adr/DECISIONS.md` (same format `/decide` uses — see that command).
 6. Write `docs/specs/<slug>/ImplementationPlan.md`.
 7. Confirm with the user before pointing them to `/spec:tasks`.
 
@@ -53,7 +54,7 @@ Spec: docs/specs/<slug>/Specification.md
 - ...
 
 ## Related ADRs
-- docs/adr/000N-....md
+- docs/adr/YYYY-MM-DD-slug.md
 ```
 
 ## Guardrails

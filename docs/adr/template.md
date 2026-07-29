@@ -1,7 +1,8 @@
-# ADR-000N: <Decision Title>
+# ADR: <Decision Title>
 
-Status: Proposed | Accepted | Superseded by ADR-000M
 Date: YYYY-MM-DD
+Slug: <slug>
+Status: Proposed | Accepted | Superseded by <YYYY-MM-DD-slug>
 Related spec: docs/specs/<slug>/Specification.md
 
 ## Context

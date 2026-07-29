@@ -11,7 +11,7 @@ const PKG_ROOT = path.join(__dirname, "..");
 // rendered on the fly from .claude/ (Codex CLI target — project-scoped custom
 // prompts aren't reliably supported there yet, only project-scoped Skills), plus
 // the docs/ scaffold shared by both (never the design source docs at docs/*.md,
-// and never generated artifacts under docs/specs/<slug>/ or docs/adr/NNNN-*.md).
+// and never generated artifacts under docs/specs/<slug>/ or docs/adr/YYYY-MM-DD-*.md).
 const DIR_ITEMS = [".claude"];
 const FILE_ITEMS = [
   "docs/specs/README.md",

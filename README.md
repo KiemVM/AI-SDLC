@@ -64,7 +64,7 @@ npx github:KiemVM/AI-SDLC --force                  # or --target codex / --targe
 This refreshes `.claude/` (or `.codex/skills/`) and the static scaffold READMEs/templates to
 whatever `main` currently has — `npx github:...` always fetches fresh, there's no version
 pinning yet, so this is effectively "update to latest." Your project's own generated content
-(`docs/specs/`, `docs/business/`, `docs/ux/`, `docs/adr/NNNN-*.md`, and the running
+(`docs/specs/`, `docs/business/`, `docs/ux/`, `docs/adr/YYYY-MM-DD-*.md`, and the running
 `docs/adr/DECISIONS.md` / `docs/release/CHANGELOG.md` logs) is never in the copy list, so
 nothing you've written is at risk — `DECISIONS.md` and `CHANGELOG.md` specifically are
 seeded once and then **never** touched by `--force`, even on repeat installs, since they
@@ -103,12 +103,12 @@ CLI the same workflow is available as Skills with the same names (e.g. `spec-wri
 |---|---|---|---|
 | `/business:vision` | Business | Problem, target users, goals, success metrics | `docs/business/Vision.md` |
 | `/business:prd` | Business | Vision → product-level epic list | `docs/business/PRD.md` |
-| `/business:persona <slug> "<role>"` | Business | Define a user persona | `docs/business/personas/<slug>.md` |
+| `/business:persona "<role>" [slug]` | Business | Define a user persona | `docs/business/personas/<slug>.md` |
 | `/business:architecture` | Business | Living whole-system architecture doc | `docs/architecture/Architecture.md` |
-| `/ux:user-journey <persona> <journey> "<scenario>"` | UX | Walk a persona through a scenario | `docs/ux/journeys/<persona>-<journey>.md` |
-| `/ux:wireframe <screen> "<purpose>"` | UX | Low-fidelity screen structure | `docs/ux/wireframes/<screen>.md` |
-| `/ux:prototype <slug> "<flow>"` | UX | Stitch wireframes into a flow, check readiness | `docs/ux/prototypes/<slug>.md` |
-| `/spec:spec <slug> "<desc>"` | Specification | Turn an idea into a testable spec (WHAT/WHY only) | `docs/specs/<slug>/Specification.md` |
+| `/ux:user-journey <persona-slug> "<scenario>" [journey-slug]` | UX | Walk a persona through a scenario | `docs/ux/journeys/<persona>-<journey>.md` |
+| `/ux:wireframe "<purpose>" [slug]` | UX | Low-fidelity screen structure | `docs/ux/wireframes/<screen>.md` |
+| `/ux:prototype "<flow>" [slug]` | UX | Stitch wireframes into a flow, check readiness | `docs/ux/prototypes/<slug>.md` |
+| `/spec:spec "<desc>" [slug]` | Specification | Turn an idea into a testable spec (WHAT/WHY only) | `docs/specs/<slug>/Specification.md` |
 | `/spec:plan <slug>` | Specification | Turn the spec into a technical approach | `docs/specs/<slug>/ImplementationPlan.md`, optional ADRs |
 | `/spec:tasks <slug>` | Specification | Break the plan into a small, ordered task backlog | `docs/specs/<slug>/Tasks.md` |
 | `/engineering:implement <Task-ID>` | Engineering | Implement one task, test-first | source + tests, checks off the task |
@@ -116,7 +116,10 @@ CLI the same workflow is available as Skills with the same names (e.g. `spec-wri
 | `/engineering:review [PR#]` | Engineering | Review a diff/PR for bugs and spec/constitution adherence | findings (chat output) |
 | `/engineering:refactor [scope]` | Engineering | Improve structure in small, test-verified steps, no behavior change | source changes, optional ADR |
 | `/release:release [version]` | Release | Readiness gate + changelog/release notes draft — never tags/pushes/deploys | `docs/release/CHANGELOG.md` entry, PR description (chat) |
-| `/decide <slug> "<decision>"` | — (any phase) | Capture a mid-work decision and find what's now stale downstream | ADR + `docs/adr/DECISIONS.md` row |
+| `/decide "<decision>" [slug]` | — (any phase) | Capture a mid-work decision and find what's now stale downstream | ADR + `docs/adr/DECISIONS.md` row |
+
+All slugs above are auto-derived (kebab-case) from the description/role/etc. if you don't
+supply one explicitly — see each command's own help for the exact override syntax.
 | `/guide` | — | Cheat sheet + live feature status | (read-only) |
 
 Not every project needs to start at Business — if you already have a clear feature in mind,
@@ -158,12 +161,23 @@ section — no formal versioning for this toolkit.
 ## Decision log
 
 Mid-work decisions (a scope reversal, a technical approach swap — "switch rate-limiting to
-Kong") have a home other than chat: run `/decide <slug> "<decision>"` from any phase. It
-writes an ADR, appends a row to `docs/adr/DECISIONS.md` (the one file to scan for "what's been
+Kong") have a home other than chat: run `/decide "<decision>"` from any phase. It writes an
+ADR, appends a row to `docs/adr/DECISIONS.md` (the one file to scan for "what's been
 decided"), and greps existing specs/plans/tasks/architecture docs for anything that now
 contradicts the decision so it doesn't silently go stale. `/spec:plan` and
 `/engineering:refactor` write to the same ADR/index format for decisions made in their normal
 flow — `/decide` exists for everything that doesn't fit neatly into either.
+
+ADRs are named `YYYY-MM-DD-<slug>.md`, not a sequential number — deliberately, so two people
+working on parallel branches can never silently collide on "the next ADR number" for two
+different decisions (see `docs/adr/README.md`). `docs/adr/DECISIONS.md` and
+`docs/release/CHANGELOG.md` are the two files most likely to hit an ordinary git merge
+conflict when multiple people work in parallel (both are shared, append-to-the-top logs) —
+that's expected and safe to resolve by keeping both rows, the same as any team already does
+with a shared `CHANGELOG.md`. Per-feature files (`docs/specs/<slug>/`, `docs/ux/journeys/`,
+personas, etc.) don't have this problem — each feature owns its own path, and if two branches
+ever do pick the same slug for different features, git's own add/add conflict forces a rename
+before either can merge.
 
 ## Folder conventions
 
@@ -182,7 +196,7 @@ docs/
 ├── architecture/Architecture.md   # living, whole-system — distinct from adr/ and specs/*/ImplementationPlan.md
 ├── adr/
 │   ├── DECISIONS.md         # scannable index of every decision — check here first
-│   └── NNNN-slug-decision.md   # written by /spec:plan, /engineering:refactor, or /decide
+│   └── YYYY-MM-DD-slug.md   # written by /spec:plan, /engineering:refactor, or /decide
 └── release/CHANGELOG.md
 ```
 

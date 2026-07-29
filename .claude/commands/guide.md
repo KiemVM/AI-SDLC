@@ -41,10 +41,34 @@ WORKFLOW ORDER
 
   /guide                                        -> this cheat sheet
 
-Not every project needs to start at Business — jump straight to /spec:spec if you already
-know the feature. Business/UX exist for when you want that discipline upstream. /decide isn't
-part of the linear flow — run it any time a decision changes direction that's already written
-down (e.g. switching a technical approach mid-implementation).
+COMMON SCENARIOS
+
+  New project, nothing built yet
+    /business:vision -> /business:prd -> (optional /business:persona, /ux:*) -> /spec:spec ...
+    Skip Business/UX entirely and start at /spec:spec if you already know exactly what
+    to build and don't want that ceremony.
+
+  Existing project, first time using this toolkit
+    Run /business:architecture once — it reads your actual code (not aspirational
+    design) and writes docs/architecture/Architecture.md, so /spec:plan and /decide
+    have something real to ground against later. Vision/PRD are optional; skip them if
+    you just want the Spec+Engineering discipline layered on what already exists.
+
+  Adding one feature to an existing project
+    Feature has real UI/UX?
+      (persona exists for this user? if not: /business:persona) -> /ux:user-journey
+      -> /ux:wireframe -> /ux:prototype -> /spec:spec
+    Backend/API/infra only, no distinct UX?
+      -> straight to /spec:spec
+    Then always: /spec:plan -> /spec:tasks -> per task: /engineering:implement,
+    /engineering:test as needed -> /engineering:review -> /engineering:refactor as needed.
+    /spec:plan reads your existing code structure; /engineering:implement detects and
+    follows your existing test framework/conventions rather than introducing a new one.
+
+  Mid-work decision changes direction (e.g. switching a technical approach)
+    /decide any time, any phase — don't let it drift into just chat. It writes an ADR,
+    logs it in docs/adr/DECISIONS.md, and flags existing specs/plans/tasks that are now
+    stale so they don't silently go out of sync.
 
 GOVERNANCE
   .claude/CONSTITUTION.md   Non-negotiable principles every command follows. Read it,

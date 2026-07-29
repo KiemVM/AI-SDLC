@@ -28,11 +28,15 @@ no effect elsewhere doesn't need this — that's just normal implementation judg
    direction no longer holds. Future readers need to know *why*, not just *what*, especially
    when they're deciding whether this decision still applies to their situation.
 3. **Check `docs/adr/DECISIONS.md` for anything this supersedes.** If found, mark the old ADR
-   `Superseded by ADR-000N` — never delete or silently edit it; the record of "we used to
-   think X" is itself valuable history.
-4. **Write the ADR** using the standard template (Context / Decision / Consequences) — same
-   shape whether it came from `/spec:plan`, `/engineering:refactor`, or `/decide`, so
-   `docs/adr/` stays one consistent format regardless of when a decision happened.
+   `Superseded by <YYYY-MM-DD-slug>` — never delete or silently edit it; the record of "we
+   used to think X" is itself valuable history.
+4. **Write the ADR** as `docs/adr/YYYY-MM-DD-<slug>.md` using the standard template (Context /
+   Decision / Consequences) — same shape whether it came from `/spec:plan`,
+   `/engineering:refactor`, or `/decide`, so `docs/adr/` stays one consistent format
+   regardless of when a decision happened. The date+slug filename is deliberate, not a
+   sequential number — see `docs/adr/README.md`: a shared counter lets two people on parallel
+   branches silently pick the same "next number" for different decisions, since their
+   filenames end up different (different slugs) and git never flags a conflict to catch it.
 5. **Propagate — this is the step that's easiest to skip and most important not to.** Search
    every spec, plan, task list, and the architecture doc for the old assumption. A grep on the
    literal old term isn't enough if the language differs ("rate limit" vs "throttling" vs
@@ -58,3 +62,4 @@ no effect elsewhere doesn't need this — that's just normal implementation judg
 | `docs/adr/DECISIONS.md` wasn't updated even though a new ADR was written | The index drifts from reality, so nobody trusts it as the scan-first source |
 | The propagation search used only the exact old keyword | Misses documents that describe the same thing in different words |
 | A stale spec/plan was silently rewritten without telling the user | Removes their chance to catch a propagation mistake before it compounds |
+| An ADR filename uses a sequential number instead of `YYYY-MM-DD-slug` | Silently collides with a different decision made on a parallel branch — git won't catch it since the filenames differ |
