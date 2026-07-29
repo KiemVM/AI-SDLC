@@ -1,6 +1,6 @@
 ---
 description: Map a persona through a scenario end to end — goal, steps, touchpoints, pain points
-argument-hint: [persona-slug] [journey-slug] "[scenario one-liner]"
+argument-hint: <persona-slug> "[scenario one-liner]" [optional-journey-slug-override]
 allowed-tools: Read, Write, Edit, Glob, Grep
 disable-model-invocation: false
 ---
@@ -11,19 +11,24 @@ Invoke the **user-journey-mapping** skill.
 
 ## Inputs
 
-- `$ARGUMENTS`: a persona slug, a journey slug, and a one-line scenario. Ask for whichever is
-  missing.
+- `$ARGUMENTS`: an existing persona-slug — REQUIRED, this is a lookup key, not derived. If
+  omitted or it doesn't match a file, Glob `docs/business/personas/` and list what's available
+  rather than guessing. Also a one-line scenario — REQUIRED, ask if missing.
 - `docs/business/personas/<persona-slug>.md` — REQUIRED. If missing, stop and tell the user to
-  run `/business:persona <persona-slug>` first.
+  run `/business:persona` first.
 - `docs/business/Vision.md` / `PRD.md` if present, for goal context.
 
 ## Process
 
-1. Read the persona (and vision/PRD if present).
-2. Invoke **user-journey-mapping** to walk the scenario: trigger, steps, touchpoints,
+1. Resolve `<persona-slug>` against `docs/business/personas/`; read it (and vision/PRD if
+   present).
+2. Derive `<journey-slug>` (kebab-case, 2-4 words) from the scenario, unless the user gave one
+   explicitly.
+3. Invoke **user-journey-mapping** to walk the scenario: trigger, steps, touchpoints,
    emotional highs/lows, where it could fail, and what success looks like.
-3. Write `docs/ux/journeys/<persona-slug>-<journey-slug>.md`.
-4. Report a summary and point the user to `/ux:wireframe` for the journey's key screens.
+4. Write `docs/ux/journeys/<persona-slug>-<journey-slug>.md`.
+5. Report a summary (including the derived journey-slug) and point the user to `/ux:wireframe`
+   for the journey's key screens.
 
 ## Output template — docs/ux/journeys/<persona-slug>-<journey-slug>.md
 

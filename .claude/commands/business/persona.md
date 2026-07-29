@@ -1,6 +1,6 @@
 ---
 description: Define a user persona — role, goals, pain points — that later UX and spec work reference
-argument-hint: [persona-slug] "[role/one-liner]"
+argument-hint: "[role/one-liner]" [optional-slug-override]
 allowed-tools: Read, Write, Edit, Glob, Grep
 disable-model-invocation: false
 ---
@@ -12,7 +12,8 @@ this toolkit's UX phase share — `/ux:user-journey` requires one to exist.
 
 ## Inputs
 
-- `$ARGUMENTS`: a persona slug and/or role one-liner. Ask for both if missing.
+- `$ARGUMENTS`: a one-line role/description — REQUIRED, ask if missing. A slug is auto-derived
+  from it (kebab-case, 2-4 words); add your own as an extra word to override.
 - `docs/business/Vision.md` / `PRD.md` if present, for context (not required to proceed).
 - `.claude/CONSTITUTION.md`.
 - Any existing `docs/business/personas/<slug>.md` — ask before revising/overwriting.
@@ -20,7 +21,9 @@ this toolkit's UX phase share — `/ux:user-journey` requires one to exist.
 ## Process
 
 1. Read the constitution and, if present, the vision/PRD for context.
-2. Derive `<slug>` (kebab-case) from `$ARGUMENTS`.
+2. Derive `<slug>` (kebab-case, 2-4 words) from the role/description, unless the user gave
+   one explicitly. State it in your final summary so the user can rename before
+   `/ux:user-journey <slug> ...` references it.
 3. Invoke **persona-definition** to run the discovery loop: role, goals, pain points, context
    of use, technical proficiency, and how this persona relates to the product's goals.
 4. Write `docs/business/personas/<slug>.md`.

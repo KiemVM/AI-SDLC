@@ -1,6 +1,6 @@
 ---
 description: Create or update a feature specification (Spec-Kit style) — the WHAT and WHY, not the HOW
-argument-hint: [feature-slug] "[one-line feature description]"
+argument-hint: "[feature description]" [optional-slug-override]
 allowed-tools: Read, Write, Edit, Glob, Grep
 disable-model-invocation: false
 ---
@@ -12,7 +12,9 @@ You are creating the artifact that becomes the contract for `/spec:plan`, `/spec
 
 ## Inputs
 
-- `$ARGUMENTS`: a feature slug and/or one-line description. Ask for both if missing.
+- `$ARGUMENTS`: a one-line feature description — REQUIRED, ask if missing. A slug is
+  auto-derived from it (kebab-case, 2-4 words) — you don't need to invent one; to control it
+  yourself, add it as an extra word, e.g. `/spec:spec "Add OAuth login to the API" oauth-login`.
 - `.claude/CONSTITUTION.md` — read first, if present.
 - Any `docs/ux/prototypes/<slug>.md` or `docs/ux/wireframes/*.md` related to this feature
   (matching slug, or referenced by a matching `docs/ux/journeys/*.md`) — if this feature went
@@ -23,8 +25,10 @@ You are creating the artifact that becomes the contract for `/spec:plan`, `/spec
 ## Process
 
 1. Read `.claude/CONSTITUTION.md` if it exists.
-2. Derive `<slug>` (kebab-case) from `$ARGUMENTS`. Check `docs/specs/<slug>/` for existing
-   artifacts.
+2. Derive `<slug>` (kebab-case, 2-4 words capturing the core noun phrase) from the
+   description, unless the user gave one explicitly. Check `docs/specs/<slug>/` for existing
+   artifacts. State the slug in your final summary so the user can rename it before it's
+   referenced by `/spec:plan <slug>` and later commands.
 3. Glob `docs/ux/prototypes/` and `docs/ux/wireframes/` for anything matching this slug. If
    found, read it/them fully — this feature's User Scenarios and Functional Requirements must
    be consistent with the designed flow, not written independently of it. If nothing matches

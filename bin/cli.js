@@ -17,13 +17,16 @@ const FILE_ITEMS = [
   "docs/specs/README.md",
   "docs/adr/README.md",
   "docs/adr/template.md",
-  "docs/adr/DECISIONS.md",
   "docs/business/README.md",
   "docs/ux/README.md",
   "docs/architecture/README.md",
   "docs/release/README.md",
-  "docs/release/CHANGELOG.md",
 ];
+// Seeded once, then grow with real project data (decisions logged, releases
+// shipped) — created if missing, but NEVER force-overwritten. Unlike the pure
+// templates above, an update wiping these back to the empty starter would
+// destroy real project history, not just refresh stale guidance text.
+const SEED_FILE_ITEMS = ["docs/adr/DECISIONS.md", "docs/release/CHANGELOG.md"];
 
 const VALID_TARGETS = ["claude", "codex", "both"];
 
@@ -48,7 +51,14 @@ Options:
 
 The docs/ scaffold (specs/adr/business/ux/architecture/release conventions) is
 always installed, regardless of target — both agents read/write the same docs/
-structure. Existing files are kept unless --force is given.`;
+structure. Existing files are kept unless --force is given, EXCEPT
+docs/adr/DECISIONS.md and docs/release/CHANGELOG.md: those accumulate real
+project history (logged decisions, shipped releases), so they're seeded once
+and never touched by --force, even on an update.
+
+To update an existing install to the latest toolkit version, re-run this same
+command with --force — your project's own generated docs (specs, personas,
+ADRs, decisions, changelog) are never in the copy list and are always safe.`;
 
 function parseArgs(argv) {
   const args = { dest: process.cwd(), force: false, dryRun: false, help: false, target: "claude" };
@@ -127,6 +137,12 @@ function main() {
     const srcPath = path.join(PKG_ROOT, item);
     const destPath = path.join(args.dest, item);
     if (fs.existsSync(srcPath)) copyFile(srcPath, destPath, opts, stats);
+  }
+  for (const item of SEED_FILE_ITEMS) {
+    const srcPath = path.join(PKG_ROOT, item);
+    const destPath = path.join(args.dest, item);
+    // force is deliberately ignored here — see SEED_FILE_ITEMS comment above.
+    if (fs.existsSync(srcPath)) copyFile(srcPath, destPath, { ...opts, force: false }, stats);
   }
 
   const rel = (p) => path.relative(args.dest, p);

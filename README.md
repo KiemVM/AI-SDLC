@@ -52,6 +52,25 @@ cp -r .claude docs <your-project>/
 Copy-Item -Recurse .claude,docs <your-project>/
 ```
 
+## Updating an existing install
+
+Already have this toolkit in a project and want the latest commands/skills? Re-run the same
+install command with `--force`:
+
+```bash
+npx github:KiemVM/AI-SDLC --force                  # or --target codex / --target both
+```
+
+This refreshes `.claude/` (or `.codex/skills/`) and the static scaffold READMEs/templates to
+whatever `main` currently has — `npx github:...` always fetches fresh, there's no version
+pinning yet, so this is effectively "update to latest." Your project's own generated content
+(`docs/specs/`, `docs/business/`, `docs/ux/`, `docs/adr/NNNN-*.md`, and the running
+`docs/adr/DECISIONS.md` / `docs/release/CHANGELOG.md` logs) is never in the copy list, so
+nothing you've written is at risk — `DECISIONS.md` and `CHANGELOG.md` specifically are
+seeded once and then **never** touched by `--force`, even on repeat installs, since they
+accumulate real project history rather than being static templates. Run with `--dry-run`
+first if you want to preview what would change.
+
 ## Multi-agent support
 
 `.claude/` (commands + skills) is the **single source of truth**. Codex CLI has no reliable

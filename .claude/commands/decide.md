@@ -1,6 +1,6 @@
 ---
 description: Capture a product/technical decision made mid-work (any phase), record it durably, and find what downstream docs need updating
-argument-hint: [slug] "[decision one-liner]"
+argument-hint: "[decision one-liner]" [optional-slug-override]
 allowed-tools: Read, Write, Edit, Glob, Grep
 disable-model-invocation: false
 ---
@@ -15,15 +15,16 @@ lost in chat and never reach the docs that depended on the old approach.
 
 ## Inputs
 
-- `$ARGUMENTS`: a slug for this decision and a one-line statement of what was decided. Ask for
-  whichever is missing.
+- `$ARGUMENTS`: a one-line statement of what was decided — REQUIRED, ask if missing. A slug is
+  auto-derived from it (kebab-case, 2-4 words); add your own as an extra word to override.
 - `.claude/CONSTITUTION.md`.
 - `docs/adr/DECISIONS.md` — the running index; read it to pick the next ADR number and to
   check whether this decision supersedes an existing one.
 
 ## Process
 
-1. Read the constitution and `docs/adr/DECISIONS.md`.
+1. Read the constitution and `docs/adr/DECISIONS.md`. Derive `<slug>` (kebab-case, 2-4 words)
+   from the decision statement, unless the user gave one explicitly.
 2. Invoke **decision-capture** to write the ADR: context, the decision itself, consequences,
    and — if this replaces an earlier decision — mark that ADR `Superseded by ADR-000N` (never
    delete it).
